@@ -1,0 +1,336 @@
+/* Figura docs site — shared stylesheet for index.html, figura-beta-v0.1-manual.html,
+   figura-beta-tester-agreement.html, and figura-beta-tester-privacy-policy.html. */
+
+/* ===== Design tokens ===== */
+:root {
+  --bg-deep: #08061a;
+  --bg-vignette: #0b0918;
+  --panel-fill: rgba(22, 18, 44, 0.66);
+  --panel-border: rgba(255, 255, 255, 0.08);
+  --amber: #f0a877;
+  --amber-dark: #9c5c30;
+  --lavender: #9fb0ea;
+  --text-bright: #f3edff;
+  --text-mid: #c3c6e6;
+  --text-dim: #8b88b0;
+  --text-mute: #6f6c98;
+}
+
+/* ===== Base / reset ===== */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: radial-gradient(ellipse 900px 600px at 50% 0%, #14112b 0%, var(--bg-deep) 60%);
+  background-color: var(--bg-deep);
+  color: var(--text-mid);
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 15px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--amber); }
+p { color: var(--text-mid); }
+strong { color: var(--text-bright); font-weight: 600; }
+code {
+  background: var(--bg-vignette);
+  border: 1px solid var(--panel-border);
+  border-radius: 4px;
+  padding: 1px 6px;
+  color: var(--lavender);
+  font-size: 13px;
+}
+
+/* ===== Page wrap widths — one per page type ===== */
+.wrap { margin: 0 auto; }
+.wrap--manual { max-width: 880px; padding: 0 24px 100px; }
+.wrap--legal  { max-width: 720px; padding: 48px 24px 100px; line-height: 1.7; }
+.wrap--legal p { margin: 0 0 14px; }
+
+/* ===== Hero header — index.html + manual ===== */
+header.hero {
+  text-align: center;
+  padding: 64px 24px 40px;
+  border-bottom: 1px solid var(--panel-border);
+}
+header.hero img { width: 84px; height: 84px; border-radius: 20px; box-shadow: 0 0 40px rgba(240, 168, 119, 0.25); }
+.wordmark {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  letter-spacing: 0.35em;
+  margin: 20px 0 6px;
+  color: var(--text-bright);
+  text-shadow: 0 0 24px rgba(240, 168, 119, 0.45);
+}
+.tagline {
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+.version-badge {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 5px 14px;
+  border: 1px solid rgba(240, 168, 119, 0.3);
+  border-radius: 20px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--amber);
+  background: rgba(240, 168, 119, 0.08);
+}
+
+/* ===== Beta CTA buttons ===== */
+.btn {
+  display: inline-block;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  border-radius: 8px;
+  transition: opacity 0.15s ease;
+}
+.btn:hover { opacity: 0.85; }
+
+.hero-cta { margin-top: 16px; }
+.btn--ghost {
+  padding: 8px 18px;
+  font-size: 12px;
+  color: var(--amber);
+  border: 1px solid rgba(240, 168, 119, 0.4);
+  background: rgba(240, 168, 119, 0.08);
+}
+
+.btn--solid {
+  padding: 14px 34px;
+  font-size: 14px;
+  color: #1a1006;
+  background: linear-gradient(180deg, var(--amber), var(--amber-dark));
+  box-shadow: 0 8px 24px rgba(240, 168, 119, 0.3);
+}
+
+.cta-section { text-align: center; }
+.cta-section p { max-width: 480px; margin: 0 auto 24px; }
+
+/* ===== Sticky nav — manual only ===== */
+nav.toc {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(8, 6, 26, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--panel-border);
+  padding: 12px 24px;
+}
+nav.toc ul {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 4px;
+  justify-content: center;
+}
+nav.toc a {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 6px;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+nav.toc a:hover { color: var(--amber); background: rgba(240, 168, 119, 0.08); }
+
+/* ===== Sections + headings — index.html + manual ===== */
+section { padding: 56px 0 8px; border-bottom: 1px solid var(--panel-border); }
+section:last-of-type { border-bottom: none; }
+
+h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--amber);
+  text-shadow: 0 0 12px rgba(240, 168, 119, 0.35);
+  margin: 0 0 20px;
+}
+h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--text-bright);
+  letter-spacing: 0.02em;
+  margin: 32px 0 10px;
+}
+
+/* ===== Manual only: cards, feature lists, tables, pills, notes ===== */
+.card {
+  background: var(--panel-fill);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin: 16px 0;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+}
+.card h4 {
+  margin: 0 0 8px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+.card p:last-child { margin-bottom: 0; }
+
+ul.feature-list { padding-left: 0; list-style: none; margin: 16px 0; }
+ul.feature-list li {
+  padding: 10px 0 10px 26px;
+  position: relative;
+  border-bottom: 1px solid var(--panel-border);
+}
+ul.feature-list li:last-child { border-bottom: none; }
+ul.feature-list li::before {
+  content: "▸";
+  position: absolute;
+  left: 4px;
+  color: var(--amber);
+}
+
+table { width: 100%; border-collapse: collapse; margin: 14px 0 28px; font-size: 13px; }
+caption {
+  text-align: left;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--lavender);
+  padding-bottom: 8px;
+}
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--panel-border); vertical-align: top; }
+th { color: var(--text-mute); font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; font-size: 10.5px; }
+td.name { color: var(--text-bright); white-space: nowrap; }
+td.range { color: var(--lavender); white-space: nowrap; }
+
+.pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+.pill {
+  font-size: 11px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(159, 176, 234, 0.35);
+  color: var(--lavender);
+  background: rgba(159, 176, 234, 0.08);
+}
+
+.note {
+  border-left: 3px solid var(--amber);
+  padding: 10px 16px;
+  margin: 20px 0;
+  background: rgba(240, 168, 119, 0.06);
+  border-radius: 0 8px 8px 0;
+  color: var(--text-mid);
+  font-size: 13.5px;
+}
+.note strong { color: var(--amber); }
+
+/* ===== Screenshot image — index.html + manual ===== */
+.screenshot {
+  width: 100%;
+  display: block;
+  border-radius: 10px;
+  border: 1px solid var(--panel-border);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.45);
+  margin: 20px 0;
+}
+/* index.html: screenshot sits directly under the hero, needs top space only */
+.screenshot--hero { margin: 44px 0 0; }
+
+/* ===== Legal document pages — agreement + privacy policy ===== */
+.back-link {
+  display: inline-block;
+  margin-bottom: 32px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-decoration: none;
+}
+.back-link:hover { color: var(--amber); }
+
+.doc-header { border-bottom: 1px solid var(--panel-border); padding-bottom: 28px; margin-bottom: 36px; }
+.doc-eyebrow {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  margin-bottom: 10px;
+}
+h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: 0.01em;
+  color: var(--text-bright);
+  text-shadow: 0 0 24px rgba(240, 168, 119, 0.35);
+  margin: 0 0 14px;
+}
+.doc-meta { font-size: 12.5px; color: var(--text-mute); }
+.doc-meta strong { color: var(--text-dim); font-weight: 500; }
+
+/* Legal pages use a flatter, more tightly-spaced h2/h3 than the manual's
+   section-divided ones — same base rule above, overridden here. */
+.wrap--legal h2 {
+  letter-spacing: 0.15em;
+  text-shadow: none;
+  margin: 40px 0 12px;
+}
+.wrap--legal h3 {
+  font-size: 14px;
+  margin: 22px 0 8px;
+}
+
+ul.lettered { padding-left: 0; list-style: none; margin: 0 0 14px; }
+ul.lettered li { padding: 4px 0 4px 26px; position: relative; }
+ul.lettered li::before {
+  content: attr(data-marker);
+  position: absolute;
+  left: 0;
+  color: var(--amber);
+}
+
+ul.bullets { padding-left: 0; list-style: none; margin: 0 0 14px; }
+ul.bullets li { padding: 4px 0 4px 20px; position: relative; }
+ul.bullets li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: var(--amber);
+}
+
+.closing {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--panel-border);
+  font-size: 13.5px;
+  color: var(--text-dim);
+}
+
+/* ===== Footer — all pages ===== */
+footer {
+  text-align: center;
+  padding: 48px 24px 60px;
+  color: var(--text-mute);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+footer .footer-title {
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--text-mid);
+  letter-spacing: 0.15em;
+  margin-bottom: 6px;
+}

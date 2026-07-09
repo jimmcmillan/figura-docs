@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Figura: User Manual</title>
+<link rel="icon" href="assets/figura-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <img src="assets/figura-icon.png" alt="Figura icon">
+  <div class="wordmark">FIGURA</div>
+  <div class="tagline">Inverse Cymatic Synthesis</div>
+  <div class="version-badge">User Manual · v0.1 beta</div>
+  <div class="hero-cta">
+    <a class="btn btn--ghost" href="https://testflight.apple.com/join/MfzprnBw" target="_blank" rel="noopener">Join the Beta Test</a>
+  </div>
+</header>
+
+<nav class="toc">
+  <ul>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#installing">Installing</a></li>
+    <li><a href="#interface">Interface</a></li>
+    <li><a href="#shaping">Shaping Sound</a></li>
+    <li><a href="#sound-design">Sound Design</a></li>
+    <li><a href="#presets">Presets</a></li>
+    <li><a href="#tips">Tips</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a></li>
+    <li><a href="#legal">Agreement</a></li>
+    <li><a href="#privacy">Privacy Policy</a></li>
+    <li><a href="#join-beta">Join Beta</a></li>
+  </ul>
+</nav>
+
+<div class="wrap wrap--manual">
+
+  <section id="overview">
+    <h2>Overview</h2>
+    <p>
+      Figura is an 8-voice polyphonic Inverse Cymatic Synthesiser, an Audio Unit (AUv3)
+      instrument that generates sound from <strong>shape, not waveforms</strong>. You draw a
+      pattern onto a circular pad, and Figura works out
+      what vibration of a real physical membrane, the same math that governs a drumhead, 
+      would produce exactly that pattern. That vibration <em>is</em> the sound: its
+      resonant modes become the synth's oscillator bank.
+    </p>
+    <p>
+      Two independent shapes (<strong>Shape A</strong> and <strong>Shape B</strong>) can be
+      drawn, and a <strong>Morph</strong> control, with its own LFO, blends continuously
+      between them, so the timbre itself moves as you draw, automate, or modulate.
+    </p>
+	<!--
+    <div class="note">
+      <strong>You don't need the physics to use it.</strong> This manual is written for
+      playing and sound-designing with Figura, not for the math behind it. If you're curious
+      how the projection actually works, the technical write-up lives alongside the source
+      code in the project's <code>README.md</code>.
+    </div>>
+		-->
+  </section>
+
+  <section id="installing">
+    <h2>Installing</h2>
+    <p>Figura ships as a small container app that installs an Audio Unit plugin system-wide.</p>
+    <ul class="feature-list">
+      <li><strong>Requirements:</strong> macOS, and a host application that supports Audio Unit
+        (AUv3) instrument plugins. Figura is beta software, currently tested on Logic Pro 12.0.1
+        and Ableton Live 12 Lite.</li>
+      <li><strong>Install:</strong> copy <strong>Figura.app</strong> into your
+        <code>/Applications</code> folder and open it once. This registers the plugin with
+        macOS. You don't need to keep the app open afterwards, and you don't need to use it
+        directly.</li>
+      <li><strong>Finding it in your DAW:</strong> look for <strong>Figura</strong> under the
+        <strong>JMac</strong> manufacturer name, in your host's Instrument/MIDI-FX AU list.</li>
+    </ul>
+    <div class="note">
+      If Figura doesn't show up in your DAW's plugin list right away, quit and relaunch the
+      DAW. Most hosts only rescan for newly installed Audio Units on launch.
+    </div>
+  </section>
+
+  <section id="interface">
+    <h2>Interface</h2>
+    <p>The main window is organized around the two drawing pads, the Morph control between
+      them, and a live view of the resulting resonance, with all the sound-shaping controls
+      below.</p>
+
+    <img class="screenshot" src="assets/figura-v0.1beta-screenshot-spooky-chime-2026-07-09.png" alt="Figura main window, showing the Shape A/B drawing pads, Morph control, Plate Resonance display, and sound design panels">
+
+    <h3>Shape A / Shape B</h3>
+    <p>Two identical drawing pads. Click or tap and drag inside the circle to paint a pattern.
+	  Brush strength is additive, so going over the same spot again makes it stronger.
+      Each pad has:</p>
+    <ul class="feature-list">
+      <li><strong>Clear</strong>: wipes that pad's drawing back to silence.</li>
+      <li><strong>Quick shape buttons</strong>: Ring, Star, Cross, Line, Blob, instantly
+        fill the pad with a ready-made pattern, so you can hear the shape-to-sound mapping
+        without freehand drawing.</li>
+    </ul>
+
+    <h3>Morph &amp; Brush</h3>
+    <p>The central <strong>Morph</strong> knob blends the synth's sound continuously from
+      100% Shape A to 100% Shape B. <strong>Brush</strong> sets how large a mark your next
+      stroke makes on either pad.</p>
+
+    <h3>Plate Resonance / Live Output Spectrum</h3>
+    <p>The right-hand display is a genuine rendering of the vibration your current
+      shape/morph position produces, brighter near the still points (nodes), darker at the
+      points of maximum motion (antinodes), updating live as you draw, morph, or play.</p>
+
+    <h3>Preset control</h3>
+    <p>The bordered box at the top center always shows the name of the currently loaded
+      preset. Click it to open the <a href="#presets">Preset Manager</a>; click
+      <strong>Save</strong> beside it to save your current sound as a new preset. See
+      <a href="#presets">Presets</a> below for the full picture.</p>
+  </section>
+
+  <section id="shaping">
+    <h2>Shaping Sound Through Drawing</h2>
+    <p>Because the whole synth is built on projecting shape onto physical resonance, small
+      changes in <em>where</em> you draw can produce very different-sounding results,
+      more so than most synths' oscillator shapes. A few properties worth knowing:</p>
+    <ul class="feature-list">
+      <li><strong>Position matters more than size.</strong> A ring drawn near the center of
+        the pad and the same ring drawn near the edge activate almost entirely different
+        resonant modes, because each radius lines up with different natural node lines.</li>
+      <li><strong>Symmetry controls harmonic density.</strong> A single off-center dot excites
+        very few modes, simple, clangy, almost pitched. The Star preset deliberately
+        stacks several angular symmetries at once, producing the densest, most inharmonic
+        preset in the factory bank.</li>
+      <li><strong>Morphing while playing is the most direct way to feel this.</strong> Draw
+        two very different shapes into A and B, then move Morph (by hand, by automation, or
+        via the LFO) while holding a note. The timbre visibly and audibly transforms in
+        step with the shapes.</li>
+    </ul>
+  </section>
+
+  <section id="sound-design">
+    <h2>Sound Design Controls</h2>
+    <p>Every control below is a standard automatable Audio Unit parameter. Automate,
+      MIDI-map, or modulate any of them from your host exactly as you would any other
+      instrument plugin.</p>
+
+    <table>
+      <caption>LFO: modulates the Morph position</caption>
+      <thead><tr><th>Parameter</th><th>Range</th><th>Default</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td class="name">Shape</td><td class="range">Sine / Triangle / Saw / Square / S&amp;H</td><td>Sine</td><td>Waveform driving the modulation.</td></tr>
+        <tr><td class="name">Rate</td><td class="range">0.02 – 28 Hz</td><td>0.5 Hz</td><td>Speed of the modulation, log-scaled for fine control at low rates.</td></tr>
+        <tr><td class="name">Depth</td><td class="range">0 – 100%</td><td>0%</td><td>How far the LFO swings the Morph position around wherever the Morph knob is currently set.</td></tr>
+      </tbody>
+    </table>
+
+    <table>
+      <caption>Filter</caption>
+      <thead><tr><th>Parameter</th><th>Range</th><th>Default</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td class="name">Type</td><td class="range">Lowpass / Highpass</td><td>Lowpass</td><td>Filter character.</td></tr>
+        <tr><td class="name">Slope</td><td class="range">2-pole (12 dB/oct) / 4-pole (24 dB/oct)</td><td>2-pole</td><td>How steeply the filter cuts.</td></tr>
+        <tr><td class="name">Cutoff</td><td class="range">20 Hz – 20 kHz</td><td>8 kHz</td><td>Filter frequency, log-scaled.</td></tr>
+        <tr><td class="name">Resonance</td><td class="range">0 – 100%</td><td>20%</td><td>Emphasis at the cutoff frequency.</td></tr>
+        <tr><td class="name">Env Amount</td><td class="range">-100 – +100%</td><td>0%</td><td>How much, and in which direction, the Filter Envelope pushes the cutoff.</td></tr>
+      </tbody>
+    </table>
+
+    <table>
+      <caption>Amp Envelope &amp; Filter Envelope (ADSR)</caption>
+      <thead><tr><th>Parameter</th><th>Range</th><th>Amp default</th><th>Filter default</th></tr></thead>
+      <tbody>
+        <tr><td class="name">Attack</td><td class="range">1 – 5000 ms</td><td>10 ms</td><td>10 ms</td></tr>
+        <tr><td class="name">Decay</td><td class="range">1 – 5000 ms</td><td>300 ms</td><td>200 ms</td></tr>
+        <tr><td class="name">Sustain</td><td class="range">0 – 100%</td><td>70%</td><td>50%</td></tr>
+        <tr><td class="name">Release</td><td class="range">1 – 10000 ms</td><td>500 ms</td><td>400 ms</td></tr>
+      </tbody>
+    </table>
+    <p>The Amp Envelope shapes overall loudness; the Filter Envelope (combined with Filter
+      Env Amount above) shapes cutoff movement. Useful for plucks, swells, and evolving
+      textures. Both respect your host's sustain pedal.</p>
+
+    <table>
+      <caption>Global &amp; Pitch</caption>
+      <thead><tr><th>Parameter</th><th>Range</th><th>Default</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td class="name">Tune</td><td class="range">±24 semitones</td><td>0</td><td>Coarse transpose.</td></tr>
+        <tr><td class="name">Fine Detune</td><td class="range">±50 cents</td><td>0</td><td>Fine tuning.</td></tr>
+        <tr><td class="name">Velocity Sensitivity</td><td class="range">0 – 100%</td><td>50%</td><td>How much MIDI velocity affects note loudness.</td></tr>
+        <tr><td class="name">Output Level</td><td class="range">0 – 200%</td><td>80%</td><td>Overall output gain.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="presets">
+    <h2>Presets &amp; the Preset Manager</h2>
+    <p>Click the preset name at the top of the window to open the full-screen
+      <strong>Preset Manager</strong>: Figura's own preset browser, organized into banks.</p>
+
+    <h3>Banks</h3>
+    <div class="pill-row">
+      <span class="pill">Factory (locked)</span>
+      <span class="pill">User</span>
+      <span class="pill">+ your own custom banks</span>
+    </div>
+    <p><strong>Factory</strong> is read-only and ships with 11 presets: <strong>Init, Ring,
+      Star, Cross, Line, Blob</strong>, plus five hand-designed extras. <strong>Frantic
+      Filtered Ring to Star, Hover Car Racer, Mystic Flutter, Slow Morphing Ring to Star,</strong>
+      and <strong>Spooky Chime</strong>. <strong>User</strong> is where anything you save
+      lands by default, and you can create as many additional banks as you like to organize
+      your own patches, with New Bank / Rename Bank / Delete Bank controls right in the
+      manager.</p>
+
+    <h3>Loading a preset</h3>
+    <p><strong>Single-click</strong> a preset to load and audition it. <strong>Double-click</strong>
+      to load it and close the manager in one action.</p>
+
+    <h3>Saving your own sounds</h3>
+    <div class="card">
+      <h4>Save</h4>
+      <p>Overwrites the currently selected User/custom-bank preset in place with your current
+        sound. The fast way to update a patch you're iterating on.</p>
+    </div>
+    <div class="card">
+      <h4>Save New</h4>
+      <p>Prompts for a name and saves your current sound as a brand-new preset. This is
+        also what the <strong>Save</strong> button next to the preset name in the main
+        window does, jumping straight to the User bank so you can name and store it in one
+        step.</p>
+    </div>
+
+    <h3>Import &amp; Export</h3>
+    <p>Figura's presets are plain <code>.aupreset</code> files, the same format Logic and
+      Ableton use natively. So they're fully interchangeable:</p>
+    <ul class="feature-list">
+      <li><strong>Export / Import (single preset)</strong>: Save any one preset out to a
+        file, or bring any <code>.aupreset</code> file in as a new User preset.</li>
+      <li><strong>Export Bank / Import Bank</strong>: Export every preset in a bank as a
+        folder in one go, or import a whole folder of <code>.aupreset</code> files as a new
+        bank.</li>
+    </ul>
+
+    <div class="note">
+      Figura's own Preset Manager and your host's native preset menu work side by side.
+      Factory presets appear in both.
+    </div>
+  </section>
+
+  <section id="tips">
+    <h2>Tips &amp; Things to Try</h2>
+    <ul class="feature-list">
+      <li>A single small dot, off-center, gives a simple, almost-pitched, clangy tone,
+        a good starting point for learning how shape maps to sound.</li>
+      <li>Draw a thin ring near the center of the pad, listen, then Clear and redraw it near
+        the edge. The timbre shifts in discrete steps between the two, since each radius
+        lines up with different resonant modes.</li>
+      <li>Try wildly different shapes in A and B, then set LFO Depth high with a slow Rate
+        for a constantly evolving pad sound.</li>
+      <li>Use a fast Filter Envelope with negative Env Amount and a short Amp decay for
+        percussive, plate-like plucks.</li>
+      <li>Duplicate a Factory preset into User first if you want to tweak it. Factory stays
+        untouched as your reference.</li>
+    </ul>
+  </section>
+
+  <section id="troubleshooting">
+    <h2>Troubleshooting</h2>
+    <ul class="feature-list">
+      <li><strong>Figura doesn't appear in my DAW's plugin list.</strong> Make sure you've
+        opened Figura.app at least once, then restart your DAW. Most hosts only scan for
+        new Audio Units on launch.</li>
+      <li><strong>Where are my saved presets stored?</strong> Inside Figura's own app data.
+        They persist across app updates and don't need to be backed up manually, but Export
+        (or Export Bank) is the safest way to keep an external copy of anything important.</li>
+      <li><strong>A preset I imported doesn't show up.</strong> Only files with a
+        <code>.aupreset</code> extension are recognized as valid preset files.</li>
+    </ul>
+  </section>
+
+  <section id="legal">
+    <h2>Agreement &amp; Disclaimer</h2>
+    <p>Figura is currently <strong>beta software</strong>, distributed to testers under a
+      Beta Testing Agreement covering warranty, liability, confidentiality, and use of
+      feedback.</p>
+    <p><a href="figura-beta-tester-agreement.html">Read the full Beta Testing Agreement →</a></p>
+  </section>
+
+  <section id="privacy">
+    <h2>Privacy Policy</h2>
+    <p>What information Figura's beta program collects, how it's used, and your rights
+      regarding it.</p>
+    <p><a href="figura-beta-tester-privacy-policy.html">Read the full Privacy Policy →</a></p>
+  </section>
+
+  <section id="join-beta" class="cta-section">
+    <h2>Want to Help Test Figura?</h2>
+    <p>Figura is currently in beta. Join the TestFlight programme for early access and a
+      direct line to shape how it develops.</p>
+    <a class="btn btn--solid" href="https://testflight.apple.com/join/MfzprnBw" target="_blank" rel="noopener">Join the Beta Test</a>
+  </section>
+
+</div>
+
+<footer>
+  <div class="footer-title">FIGURA</div>
+  Inverse Cymatic Engine · version 0.1 beta
+</footer>
+
+</body>
+</html>
